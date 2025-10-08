@@ -5,6 +5,6 @@ import { AiController } from './ai.controller';
 @Module({
   controllers: [AiController],
   providers: [AiService],
-  exports: [AiService], // xuất ra nếu module khác cần gọi AI
+  exports: [AiService],
 })
 export class AiModule {}

@@ -11,7 +11,10 @@ export class CartService {
       include: { items: true },
     });
     if (!cart) {
-      cart = await this.prisma.cart.create({ data: { userId } });
+      cart = await this.prisma.cart.create({
+        data: { userId },
+        include: { items: true },
+      });
     }
 
     const existing = cart.items.find((i) => i.productId === productId);

@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AiService {
   // Gợi ý sản phẩm dựa vào lịch sử hoặc AI mock
-  async getProductRecommendations(userId: string) {
+  getProductRecommendations(_userId: string) {
     // TODO: gọi model AI hoặc dữ liệu từ Prisma
     return [
       { id: 1, name: 'Tai nghe Sony WH-1000XM5', score: 0.92 },
@@ -15,7 +15,7 @@ export class AiService {
   }
 
   // Sinh mô tả sản phẩm tự động (mock)
-  async generateProductDescription(name: string) {
+  generateProductDescription(name: string) {
     // Ở bản thật, bạn sẽ gọi AI API (OpenAI, Gemini, hoặc model nội bộ)
     return `Sản phẩm ${name} được thiết kế tinh tế, hiệu năng vượt trội và phù hợp với người dùng hiện đại.`;
   }

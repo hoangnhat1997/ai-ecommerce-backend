@@ -6,12 +6,12 @@ export class AiController {
   constructor(private readonly aiService: AiService) {}
 
   @Get('recommend')
-  async getRecommendations(@Query('userId') userId: string) {
-    return this.aiService.getProductRecommendations(userId);
+  getRecommendations(@Query('userId') _userId: string) {
+    return this.aiService.getProductRecommendations(_userId);
   }
 
   @Post('generate-description')
-  async generateDescription(@Body('name') name: string) {
+  generateDescription(@Body('name') name: string) {
     return this.aiService.generateProductDescription(name);
   }
 }
