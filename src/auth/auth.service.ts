@@ -1,10 +1,6 @@
-import {
-  Injectable,
-  UnauthorizedException,
-  ConflictException,
-} from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -21,7 +17,7 @@ export class AuthService {
       where: { email: dto.email },
     });
     if (existing) {
-      throw new ConflictException('Email đã tồn tại');
+      throw new UnauthorizedException('Email đã tồn tại');
     }
 
     const hashed = await bcrypt.hash(dto.password, 10);
@@ -29,24 +25,28 @@ export class AuthService {
       data: { ...dto, password: hashed },
     });
 
-    return {
-      message: 'Đăng ký thành công',
-      user: { id: user.id, email: user.email, name: user.name },
-    };
+    return this.generateToken(user);
   }
 
   async login(dto: LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });
-    if (!user) throw new UnauthorizedException('Sai thông tin đăng nhập');
+
+    if (!user) throw new UnauthorizedException('Sai email hoặc mật khẩu');
 
     const valid = await bcrypt.compare(dto.password, user.password);
-    if (!valid) throw new UnauthorizedException('Sai thông tin đăng nhập');
+    if (!valid) throw new UnauthorizedException('Sai email hoặc mật khẩu');
 
+    return this.generateToken(user);
+  }
+
+  private generateToken(user: any) {
     const payload = { sub: user.id, email: user.email };
-    const token = await this.jwtService.signAsync(payload);
-
-    return { token };
+    const token = this.jwtService.sign(payload);
+    return {
+      access_token: token,
+      user: { id: user.id, email: user.email, name: user.name },
+    };
   }
 }

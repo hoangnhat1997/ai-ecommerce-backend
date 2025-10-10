@@ -13,8 +13,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   validate(payload: any) {
-    // payload chứa dữ liệu khi login bạn mã hóa
-    // ví dụ { sub: user.id, email: user.email }
     return { sub: payload.sub, email: payload.email };
   }
 }
