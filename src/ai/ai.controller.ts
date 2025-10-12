@@ -1,13 +1,13 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AiService } from './ai.service';
 
 @Controller('ai')
 export class AiController {
   constructor(private readonly aiService: AiService) {}
 
-  @Get('recommend')
-  getRecommendations(@Query('userId') _userId: string) {
-    return this.aiService.getProductRecommendations(_userId);
+  @Post('recommend')
+  getRecommendations(@Body('query') query: string) {
+    return this.aiService.getProductRecommendations(query);
   }
 
   @Post('generate-description')

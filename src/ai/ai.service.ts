@@ -6,11 +6,25 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AiService {
   // Gợi ý sản phẩm dựa vào lịch sử hoặc AI mock
-  getProductRecommendations(_userId: string) {
+  getProductRecommendations(query: string) {
     // TODO: gọi model AI hoặc dữ liệu từ Prisma
     return [
-      { id: 1, name: 'Tai nghe Sony WH-1000XM5', score: 0.92 },
-      { id: 2, name: 'Laptop ASUS Zenbook', score: 0.88 },
+      {
+        name: 'Màn hình Samsung Odyssey G9',
+        description: 'Màn hình gaming với độ phân giải 4K 1000nits.',
+        price: 3500,
+        imageUrl:
+          'https://cdn.tgdd.vn/Products/Images/44/331570/s16/macbook-pro-14-inch-m4-pro-topzone-den-thumb-1-650x650.png',
+        stock: 10,
+      },
+      {
+        name: 'Bàn phím cơ Cherry MX Red',
+        description: 'Bàn phím gaming với switch Cherry MX Red.',
+        price: 150,
+        imageUrl:
+          'https://cdn.tgdd.vn/Products/Images/44/331570/s16/macbook-pro-14-inch-m4-pro-topzone-den-thumb-1-650x650.png',
+        stock: 10,
+      },
     ];
   }
 
